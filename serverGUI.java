@@ -3,10 +3,19 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.*;
+import java.util.ArrayList;
+
 public class serverGUI {
     private JFrame frame;
+    
     private JPanel categoryPanel;
+
+    private JPanel itemPanel;
+    private JPanel itemContainer;
+    private JScrollPane scrollPane;
 
     serverGUI(){
         frame = new JFrame();
@@ -21,6 +30,13 @@ public class serverGUI {
         categoryPanel.setBounds(0,0,150,750);
         catagoriesGUI();
         frame.getContentPane().add(categoryPanel);
+
+        itemPanel = new JPanel(new GridLayout(5, 3));
+        itemContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        itemsGUI();        
+        frame.getContentPane().add(scrollPane);
+
+
 
     }
 
@@ -56,7 +72,16 @@ public class serverGUI {
     }
 
     public void itemsGUI(){
-        
+        for (int i = 0; i < 15; i++) {
+            item button = new item("hi",10);
+            button.setPreferredSize(new Dimension(100, 100));
+            itemPanel.add(button);
+        }
+
+        itemContainer.add(itemPanel);
+        scrollPane = new JScrollPane(itemContainer);
+        scrollPane.setBounds(200,110,310,625);
+
     }
 
 }
