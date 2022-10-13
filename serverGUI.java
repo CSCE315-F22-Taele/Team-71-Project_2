@@ -4,18 +4,25 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 
 public class serverGUI {
     private JFrame frame;
     
-    private JPanel categoryPanel;
+    private JPanel cartPanel;
 
     private JPanel itemPanel;
     private JPanel itemContainer;
     private JScrollPane scrollPane;
+
+    Map<String,Double> costMap = new LinkedHashMap<String,Double>();
+    HashMap<String,String> ingredientMap = new HashMap<String,String>();
 
     serverGUI(){
         frame = new JFrame();
@@ -26,61 +33,69 @@ public class serverGUI {
         frame.setResizable(false);
         frame.setSize(new Dimension(800 ,800));
 
-        categoryPanel = new JPanel(new GridLayout(7,1,0,5));
-        categoryPanel.setBounds(0,0,150,750);
-        catagoriesGUI();
-        frame.getContentPane().add(categoryPanel);
+        
+        cartPanel = new JPanel(new GridLayout(7,1,0,5));
+        cartPanel.setBounds(0,0,150,750);
+        cartGUI();
+        frame.getContentPane().add(cartPanel);
 
-        itemPanel = new JPanel(new GridLayout(5, 3));
+        makeHashMap();
+   
+        itemPanel = new JPanel(new GridLayout(1,5));
         itemContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         itemsGUI();        
         frame.getContentPane().add(scrollPane);
 
 
-
     }
 
-    public void catagoriesGUI(){
-        JLabel categories = new JLabel("Category");
+    public void cartGUI(){
+        JLabel categories = new JLabel("CART");
         categories.setHorizontalAlignment(JLabel.CENTER);
         categories.setFont(new Font("Serif", Font.BOLD, 20));
-        categoryPanel.add(categories);
+        cartPanel.add(categories);
 
-        JButton breakfast = new JButton("Breakfast");
-        breakfast.setPreferredSize(new Dimension(50,50));
-        categoryPanel.add(breakfast);
         
-        JButton Entrees = new JButton("Entrees");
-        Entrees.setPreferredSize(new Dimension(50,50));
-        categoryPanel.add(Entrees);
-
-        JButton Meals = new JButton("Meals");
-        Meals.setPreferredSize(new Dimension(50,50));
-        categoryPanel.add(Meals);
-
-        JButton Drinks = new JButton("Drinks");
-        Drinks.setPreferredSize(new Dimension(50,50));
-        categoryPanel.add(Drinks);
-
-        JButton Treats = new JButton("Treats");
-        Treats.setPreferredSize(new Dimension(50,50));
-        categoryPanel.add(Treats);
-
-        JButton Sides = new JButton("Sides");
-        Sides.setPreferredSize(new Dimension(50,50));
-        categoryPanel.add(Sides);
+        JButton Purchase = new JButton("PURCHASE");
+        Purchase.setPreferredSize(new Dimension(50,50));
+        cartPanel.add(Purchase);
+        
     }
 
     public void itemsGUI(){
-        for (int i = 0; i < 15; i++) {
-            item button = new item("hi",10);
+        
+        for (Map.Entry<String, Double> costMap : costMap.entrySet()) {
+            String key = costMap.getKey();
+            Double cost = costMap.getValue();
+            System.out.println(key + " " + cost + " " + ingredientMap.get(key));
+
+            item button = new item(key ,cost, ingredientMap.get(key));
+
             button.setPreferredSize(new Dimension(100, 100));
             itemPanel.add(button);
         }
 
+
         itemContainer.add(itemPanel);
         scrollPane = new JScrollPane(itemContainer);
-        scrollPane.setBounds(200,110,310,625);
+        itemPanel.setBackground(Color.BLACK);
+        scrollPane.setBounds(200,110,500,625);
+
+    }
+
+    public void makeHashMap(){
+        /*Make hashmaps */
+        costMap.put("Chick-fil-A E", 4.19);
+        ingredientMap.put("Chick-fil-A E", "BUNS,CHICKEN_B,SAUCE");
+
+        costMap.put("Chick-fil-A M", 7.55);
+        ingredientMap.put("Chick-fil-A M", "BUNS,CHICKEN_B,SAUCE,LETTUCE");
+
+        costMap.put("Chick-fil-A Deluxe E", 4.89);
+        costMap.put("Chick-fil-A Deluxe M", 8.25);
+
+        costMap.put("Spicy Chicken E", 4.49);
+        costMap.put("Spicy Chicken M", 7.79);
 
     }
 
