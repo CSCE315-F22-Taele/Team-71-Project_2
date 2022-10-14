@@ -21,18 +21,18 @@ public class serverGUI {
     private JFrame frame;
     
     private JPanel cartPanel;
-    private JLabel totalCost;
-    private JTextArea itemsOrderedText;
+    public JLabel totalCost;
+    public JTextArea itemsOrderedText;
     private JScrollPane itemScroll;
-    private String display = "";
+    public String display = "";
     private JButton purchase;
     private JButton clear;
     JButton managerButton;
 
 
-    private JPanel itemPanel;
-    private JPanel itemContainer;
-    private JScrollPane scrollPane;
+    public JPanel itemPanel;
+    public JPanel itemContainer;
+    public JScrollPane scrollPane;
    
     
     Map<String,Double> costMap = new LinkedHashMap<String,Double>();
@@ -42,9 +42,12 @@ public class serverGUI {
     public ArrayList<String> cartNames = new ArrayList<String>();
     public ArrayList<String> ingredientList = new ArrayList<String>();
 
+    public ArrayList<item> buttonList = new ArrayList<item>();
+
     jdbcpostgreSQL2 jd = new jdbcpostgreSQL2();
     public  managerGUI mg;
     public String date;
+
     public serverGUI(){
         frame = new JFrame();
         frame.setTitle("Server");
@@ -112,16 +115,22 @@ public class serverGUI {
 
     public void itemsGUI(){
         item button;
+      
         for (Map.Entry<String, Double> costMap : costMap.entrySet()) {
             String key = costMap.getKey();
             Double cost = costMap.getValue();
-            System.out.println(key + " " + cost + " " + ingredientMap.get(key));
 
             button = new item(key ,cost, ingredientMap.get(key));
- 
+            buttonList.add(button);
+        
+         
             button.addActionListener(e ->
-            {   
-                cartPrices.add(cost); 
+            {               
+                System.out.println(key + " " + cost + " " + ingredientMap.get(key));
+                
+            
+                //cartPrices.add(cost); 
+                addToAry(key);
                 cartNames.add(key);
 
                 totalCost.setText(totalCartCost() + "$");
@@ -140,11 +149,19 @@ public class serverGUI {
 
         itemContainer.add(itemPanel);
         scrollPane = new JScrollPane(itemContainer);
-        itemPanel.setBackground(Color.BLACK);
         scrollPane.setBounds(200,110,500,625);
 
     }
+    public void addToAry(String name){
+        for(int i = 0; i < buttonList.size(); i ++){
+            if(buttonList.get(i).getKey().equals(name)){
+                cartPrices.add(buttonList.get(i).cost); 
 
+            }
+        }
+    }
+   
+    
     public void makeHashMap(){
         /*Make hashmaps */
         costMap.put("Chick-fil-A E", 4.19);
@@ -279,7 +296,7 @@ public class serverGUI {
         managerButton.addActionListener(e ->
         {   
             mg = new managerGUI();
-            frame.setVisible(false);
+            //frame.setVisible(false);
 
         });
     }

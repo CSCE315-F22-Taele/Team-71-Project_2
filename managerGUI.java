@@ -27,6 +27,11 @@ public class managerGUI {
     private JTextArea ingredientNameArea;
     private JTextArea ingredientNumberArea;
 
+    private JButton addNewItem;
+    private JTextArea newItemNameArea;
+    private JTextArea newItemCostArea;
+    private JTextArea newItemIngredientArea;
+
     public String iName = "";
     public int iNumber = 0;
     
@@ -89,6 +94,23 @@ public class managerGUI {
         ingredientNumberArea = new JTextArea();
         inventoryUpdater.add(ingredientNumberArea);
 
+        addNewItem = new JButton("Enter name,cost,ingredient");
+        addNewItem.setPreferredSize(new Dimension(50,50));
+        addNewItem.setFont(new Font("Serif", Font.BOLD, 10));
+        inventoryUpdater.add(addNewItem);
+        addNewItemPressed();
+
+        newItemNameArea = new JTextArea();
+        inventoryUpdater.add(newItemNameArea);
+
+
+        newItemCostArea = new JTextArea();
+        inventoryUpdater.add(newItemCostArea);
+
+
+        newItemIngredientArea = new JTextArea();
+        inventoryUpdater.add(newItemIngredientArea);
+
     }
     public void updateInventoryView(){
         update.addActionListener(e ->
@@ -104,5 +126,54 @@ public class managerGUI {
             inventoryStats.setText(jd.viewInventory());
 
         });
+    }
+
+    public void addNewItemPressed(){
+        addNewItem.addActionListener(e ->
+        {   System.out.println("test2");
+          
+            
+            for(int i = 0; i < jd.sg.buttonList.size(); i++){
+                if(jd.sg.buttonList.get(i).getKey().compareTo(newItemNameArea.getText()) == 0){
+                    System.out.println("CHANGED2");
+                    double cost = Double.parseDouble(newItemCostArea.getText());
+                    jd.sg.costMap.put(newItemNameArea.getText(), cost);
+                    jd.sg.buttonList.get(i).setCost(cost);
+                    jd.sg.buttonList.get(i).changeName(newItemNameArea.getText(), cost);
+                   
+                }
+            }
+            
+            Boolean notIn = false;
+            for (Map.Entry<String, Double> costMap : jd.sg.costMap.entrySet()) {
+                String key = costMap.getKey();
+                Double cost = costMap.getValue();
+                if(key.equals(newItemNameArea.getText())){
+                    notIn = true;
+                }
+                
+            }
+            if(notIn == false){
+                jd.sg.costMap.put(newItemNameArea.getText(), Double.parseDouble(newItemCostArea.getText()));
+                jd.sg.ingredientMap.put(newItemNameArea.getText(), newItemIngredientArea.getText());
+                
+                item button = new item(newItemNameArea.getText() ,Double.parseDouble(newItemCostArea.getText()), newItemIngredientArea.getText());
+                button.addActionListener(x -> {
+                    System.out.println("nice");
+                    jd.sg.cartNames.add(button.getKey());
+                    jd.sg.display += " " + button.getKey() + "\n";
+                    jd.sg.itemsOrderedText.setText( jd.sg.display);
+                    jd.sg.cartPrices.add(button.cost);
+                    jd.sg.totalCost.setText(jd.sg.totalCartCost() + "$");
+
+                });
+                jd.sg.buttonList.add(button);
+                jd.sg.itemPanel.add(button);
+                
+
+            }
+            
+        });
+
     }
 }

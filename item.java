@@ -8,7 +8,7 @@ import javax.swing.JButton;
 public class item extends JButton{
     
     private String name;
-    private double cost;
+    public double cost;
     private String ingredient;
 
 
@@ -18,5 +18,14 @@ public class item extends JButton{
         this.ingredient = ingredient;
         setText("<html>" + name + "<br/>" + cost + "</html>");
 
+    }
+    public void changeName(String newName, double newCost){
+        setText("<html>" + newName + "<br/>" + newCost + "</html>");
+    }
+    public String getKey(){
+        return name;
+    }
+    public void setCost(double newCost){
+        cost = newCost;
     }
 }
