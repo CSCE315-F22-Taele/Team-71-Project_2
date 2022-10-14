@@ -27,6 +27,8 @@ public class serverGUI {
     private String display = "";
     private JButton purchase;
     private JButton clear;
+    JButton managerButton;
+
 
     private JPanel itemPanel;
     private JPanel itemContainer;
@@ -41,8 +43,9 @@ public class serverGUI {
     public ArrayList<String> ingredientList = new ArrayList<String>();
 
     jdbcpostgreSQL2 jd = new jdbcpostgreSQL2();
+    public  managerGUI mg;
     public String date;
-    serverGUI(){
+    public serverGUI(){
         frame = new JFrame();
         frame.setTitle("Server");
         frame.setLayout(null);
@@ -79,7 +82,7 @@ public class serverGUI {
         categories.setFont(new Font("Serif", Font.BOLD, 20));
         cartPanel.add(categories);
 
- 
+
         purchase = new JButton("PURCHASE");
         purchase.setPreferredSize(new Dimension(50,50));
         cartPanel.add(purchase);
@@ -89,6 +92,11 @@ public class serverGUI {
         clear.setPreferredSize(new Dimension(50,50));
         cartPanel.add(clear);
         clear();
+
+        managerButton = new JButton("Open Manager");
+        managerButton.setPreferredSize(new Dimension(50,50));
+        cartPanel.add(managerButton);
+        managerScreen();
 
         totalCost = new JLabel("0.00");
         totalCost.setHorizontalAlignment(JLabel.CENTER);
@@ -264,6 +272,15 @@ public class serverGUI {
             totalCost.setText("0.00" + "$");
             display = "";
             itemsOrderedText.setText(display);
+        });
+    }
+
+    public void managerScreen(){
+        managerButton.addActionListener(e ->
+        {   
+            mg = new managerGUI();
+            frame.setVisible(false);
+
         });
     }
 }

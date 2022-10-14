@@ -19,10 +19,4 @@ public class item extends JButton{
         setText("<html>" + name + "<br/>" + cost + "</html>");
 
     }
-
-  
-
-  
-    
-
 }

@@ -41,7 +41,7 @@ public class jdbcpostgreSQL2 {
   static serverGUI sg;
   public static void main(String args[]) {
     sg = new serverGUI();
-    
+
    
   }// end main
 
@@ -82,46 +82,140 @@ public class jdbcpostgreSQL2 {
         stmt.addBatch(sqlStatement);
       }
       stmt.executeBatch();
- 
-       // Running a query
-       // TODO: update the sql command here
-       // INSERT INTO salesHistory (sales_id, sales_cost, sales_date, sales_server)
-       // VALUES(7,5.49,9/20/2022,server1)
- 
-       // String sqlStatement = "INSERT INTO salesHistory (sales_id, sales_cost,
-       // sales_date, sales_server) VALUES('Rohit', 906 , 'Pulp Fiction',
-       // '05/17/2015')";
- 
-       // send statement to DBMS
-       // This executeQuery command is useful for data retrieval
-       // ResultSet result = stmt.executeQuery(sqlStatement);
-       // OR
-       // This executeUpdate command is useful for updating data
-       // int result = stmt.executeUpdate(sqlStatement);
- 
-       // OUTPUT
-       // You will need to output the results differently depeninding on which function
-       // you use
+
        System.out.println("--------------------Query Results--------------------");
-       // while (result.next()) {
-       // System.out.println(result.getString("column_name"));
-       // }
-       // OR
-       // System.out.println(result);
       } catch (Exception e) {
        e.printStackTrace();
        System.err.println(e.getClass().getName() + ": " + e.getMessage());
        System.exit(0);
       }
  
-     // closing the connection
+ 
      try {
        conn.close();
        System.out.println("Connection Closed.");
      } catch (Exception e) {
        System.out.println("Connection NOT Closed.");
-     } // end try catch
+     } 
+  }
+
+  public String viewInventory(){
+    String holder = "";
+    // Building the connection with your credentials
+    Connection conn = null;
+    String teamNumber = "71"; // Your team number
+    String sectionNumber = "906"; // Your section number
+    String dbName = "csce331_" + sectionNumber + "_" + teamNumber;
+    String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
+    dbSetup2 myCredentials = new dbSetup2();
+
+    // Connecting to the database
+    try {
+      conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+
+    System.out.println("Opened database successfully");
+
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+      String sqlStatement = "";
+      
+      sqlStatement = "SELECT * from inventory";
+      ResultSet rs =stmt.executeQuery(sqlStatement);
+      ResultSetMetaData rm = rs.getMetaData();
+      int size = rm.getColumnCount();
+
+      for(int i=1; i <=size; i++){
+        holder += rm.getColumnName(i) + " ";
+        //System.out.println(rm.getColumnName(i));
+      }
+      holder += "\n";
+      System.out.println();
+      while(rs.next()){
+        for(int i = 1;i<=size; i++){
+          //System.out.println(rs.getString(i));
+          holder += rs.getString(i) + "\n";
+        }
+      
+        //System.out.println();
+      }
+      
+    //sqlStatement = "UPDATE inventory SET inventory_count = WHERE inventory_name = " + "'" + sg.ingredientList.get(i) + "'";
+     // stmt.addBatch(sqlStatement);
+     //stmt.executeBatch();
+     
+      System.out.println("--------------------Query Results--------------------");
+     } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+     }
+
+
+    try {
+      conn.close();
+      System.out.println("Connection Closed.");
+    } catch (Exception e) {
+      System.out.println("Connection NOT Closed.");
+    } 
+    return holder;
   }
 
 
-}// end Class
+  public String changeInventory(){
+    String holder = "";
+    // Building the connection with your credentials
+    Connection conn = null;
+    String teamNumber = "71"; // Your team number
+    String sectionNumber = "906"; // Your section number
+    String dbName = "csce331_" + sectionNumber + "_" + teamNumber;
+    String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
+    dbSetup2 myCredentials = new dbSetup2();
+
+    // Connecting to the database
+    try {
+      conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+
+    System.out.println("Opened database successfully");
+
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+      String sqlStatement = "";
+      
+
+      sqlStatement = "UPDATE inventory SET inventory_count =" + sg.mg.iNumber + "WHERE inventory_name = " + "'" + sg.mg.iName + "'";
+      stmt.addBatch(sqlStatement);
+      stmt.executeBatch();
+
+      
+
+     
+      System.out.println("--------------------Query Results--------------------");
+     } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+     }
+
+
+    try {
+      conn.close();
+      System.out.println("Connection Closed.");
+    } catch (Exception e) {
+      System.out.println("Connection NOT Closed.");
+    } 
+    return holder;
+  }
+
+}
