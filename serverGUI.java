@@ -26,6 +26,7 @@ public class serverGUI {
     private JScrollPane itemScroll;
     private String display = "";
     private JButton purchase;
+    private JButton clear;
 
     private JPanel itemPanel;
     private JPanel itemContainer;
@@ -57,7 +58,7 @@ public class serverGUI {
 
         makeHashMap();
    
-        itemPanel = new JPanel(new GridLayout(1,5));
+        itemPanel = new JPanel(new GridLayout(9,5));
         itemContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         itemsGUI();        
         frame.getContentPane().add(scrollPane);
@@ -82,8 +83,12 @@ public class serverGUI {
         purchase = new JButton("PURCHASE");
         purchase.setPreferredSize(new Dimension(50,50));
         cartPanel.add(purchase);
-
         purchaseItems();
+
+        clear = new JButton("CLEAR");
+        clear.setPreferredSize(new Dimension(50,50));
+        cartPanel.add(clear);
+        clear();
 
         totalCost = new JLabel("0.00");
         totalCost.setHorizontalAlignment(JLabel.CENTER);
@@ -135,16 +140,92 @@ public class serverGUI {
     public void makeHashMap(){
         /*Make hashmaps */
         costMap.put("Chick-fil-A E", 4.19);
-        ingredientMap.put("Chick-fil-A E", "BUNS,CHICKEN_B,SAUCE");
-
+        ingredientMap.put("Chick-fil-A E", "BUNS,CHICKEN_B,SAUCE,PICKLES");
+    
         costMap.put("Chick-fil-A M", 7.55);
-        ingredientMap.put("Chick-fil-A M", "BUNS,CHICKEN_B,SAUCE,LETTUCE,POTATOES");
-
+        ingredientMap.put("Chick-fil-A M", "BUNS,CHICKEN_B,SAUCE,PICKLES,POTATOES");
+    
         costMap.put("Chick-fil-A Deluxe E", 4.89);
+        ingredientMap.put("Chick-fil-A Deluxe E", "BUNS,CHICKEN_B,SAUCE,TOMATOES,LETTUCE,PICKLES,BACON");
         costMap.put("Chick-fil-A Deluxe M", 8.25);
-
+        ingredientMap.put("Chick-fil-A Deluxe E", "BUNS,CHICKEN_B,TOMATOES,LETTUCE,PICKLES,POTATOES");
+    
         costMap.put("Spicy Chicken E", 4.49);
+        ingredientMap.put("Spicy Chicken E", "BUNS,CHICKEN_B,SAUCE,PICKLES");
         costMap.put("Spicy Chicken M", 7.79);
+        ingredientMap.put("Spicy Chicken M", "BUNS,CHICKEN_B,SAUCE,PICKLES,POTATOES");
+    
+        costMap.put("Chick-fil-A nuggets 8ct E", 4.29);
+        ingredientMap.put("Chick-fil-A nuggets 8ct E", "CHICKEN_N");
+        costMap.put("Chick-fil-A nuggets 8ct M", 7.65);
+        ingredientMap.put("Chick-fil-A nuggets 8ct M", "CHICKEN_N,POTATOES");
+    
+        costMap.put("Chick-fil-A nuggets 12ct E", 6.15);
+        ingredientMap.put("Chick-fil-A nuggets 12ct E", "CHICKEN_N");
+        costMap.put("Chick-fil-A nuggets 12ct M", 9.45);
+        ingredientMap.put("Chick-fil-A nuggets 12ct M", "CHICKEN_N,POTATOES");
+    
+        costMap.put("Chick-n-Strips 3ct E", 4.69);
+        ingredientMap.put("Chick-n-Strips 3ct E", "CHICKEN_T");
+        costMap.put("Chick-n-Strips 3ct M", 7.99);
+        ingredientMap.put("Chick-n-Strips 3ct M", "CHICKEN_T,POTATOES");
+    
+        costMap.put("Chick-n-Strips 4ct E", 6.09);
+        ingredientMap.put("Chick-n-Strips 4ct E", "CHICKEN_T");
+        costMap.put("Chick-n-Strips 4ct M", 9.35);
+        ingredientMap.put("Chick-n-Strips 4ct M", "CHICKEN_T,POTATOES");
+    
+        //grilled meals
+        costMap.put("Grilled Chicken E", 5.79);
+        ingredientMap.put("Grilled Chicken E", "BUNS,CHICKEN_B,SAUCE,PICKLES,TOMATOES,LETTUCE");
+        costMap.put("Grilled Chicken M", 9.15);
+        ingredientMap.put("Grilled Chicken M", "BUNS,CHICKEN_B,SAUCE,PICKLES,TOMATOES,LETTUCE,POTATOES");
+    
+        costMap.put("Grilled Nuggets 8ct E", 5.15);
+        ingredientMap.put("Grilled Nuggets 8ct E", "CHICKEN_N");
+        costMap.put("Grilled Nuggets 8ct M", 8.45);
+        ingredientMap.put("Grilled Nuggets 8ct M", "CHICKEN_N,POTATOES");
+    
+        costMap.put("Grilled Nuggets 12ct E", 7.45);
+        ingredientMap.put("Grilled Nuggets 12ct E", "CHICKEN_N");
+        costMap.put("Grilled Nuggets 12ct M", 10.75);
+        ingredientMap.put("Grilled Nuggets 12ct M", "CHICKEN_N,POTATOES");
+    
+        costMap.put("Grilled Chicken Club E", 7.29);
+        ingredientMap.put("Grilled Chicken Club E", "BUNS,CHICKEN_B,SAUCE,PICKLES,TOMATOES,LETTUCE,BACON");
+        costMap.put("Grilled Chicken Club M", 10.65);
+        ingredientMap.put("Grilled Chicken Club M", "BUNS,CHICKEN_B,SAUCE,PICKLES,TOMATOES,LETTUCE,BACON,POTATOES");
+    
+        
+        costMap.put("Grilled Chicken Cool Wrap E", 7.25);
+        ingredientMap.put("Grilled Chicken Cool Wrap E", "CHICKEN_B,SAUCE,TORTILLA");
+        costMap.put("Grilled Chicken Cool Wrap M", 10.59);
+        ingredientMap.put("Grilled Chicken Cool Wrap M", "CHICKEN_B,SAUCE,TORTILLA,POTATOES");
+    
+        //kids meals
+        costMap.put("Chick-fil-A nuggets 5ct Kids Meal", 5.15);
+        ingredientMap.put("Chick-fil-A nuggets 5ct Kids Meal", "CHICKEN_N");
+    
+        costMap.put("Grilled nuggets 5ct Kids Meal", 5.69);
+        ingredientMap.put("Grilled nuggets 5ct Kids Meal", "CHICKEN_N");
+    
+        //sides 
+        costMap.put("Chick-fil-A Small Waffle Potato Fries", 1.89);
+        ingredientMap.put("Chick-fil-A Small Waffle Potato Fries", "POTATOES");
+        costMap.put("Chick-fil-A Medium Waffle Potato Fries", 2.19);
+        ingredientMap.put("Chick-fil-A Medium Waffle Potato Fries", "POTATOES");
+        costMap.put("Chick-fil-A Large Waffle Potato Fries", 2.59);
+        ingredientMap.put("Chick-fil-A Large Waffle Potato Fries", "POTATOES");
+    
+        costMap.put("Small Fruit Cup", 2.79);
+        ingredientMap.put("Small Fruit Cup", "FRUIT_CUP");
+        costMap.put("Medium Fruit Cup", 3.65);
+        ingredientMap.put("Medium Fruit Cup", "FRUIT_CUP");
+    
+        costMap.put("Small Mac & Cheese", 2.85);
+        ingredientMap.put("Small Mac & Cheese", "MAC_&_CHEESE");
+        costMap.put("Medium Mac & Cheese", 3.65);
+        ingredientMap.put("Medium Mac & Cheese", "MAC_&_CHEESE");
 
     }
 
@@ -172,5 +253,17 @@ public class serverGUI {
             itemsOrderedText.setText(display);
         });
 
+    }
+    public void clear(){
+        clear.addActionListener(e ->
+        {   
+            cartNames.clear();
+            cartPrices.clear();
+            ingredientList.clear();
+            
+            totalCost.setText("0.00" + "$");
+            display = "";
+            itemsOrderedText.setText(display);
+        });
     }
 }
