@@ -15,12 +15,8 @@ public class item extends JButton{
         this.cost = cost;
         setText("<html>" + name + "<br/>" + cost + "</html>");
 
-        addActionListener(e ->
-        {
-            System.out.println(name);
-        });
-
     }
+
 
 
 
