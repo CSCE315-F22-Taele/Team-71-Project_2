@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime;
 
 public class serverGUI {
     private JFrame frame;
@@ -35,8 +37,10 @@ public class serverGUI {
 
     public ArrayList<Double> cartPrices = new ArrayList<Double>();
     public ArrayList<String> cartNames = new ArrayList<String>();
+    public ArrayList<String> ingredientList = new ArrayList<String>();
 
     jdbcpostgreSQL2 jd = new jdbcpostgreSQL2();
+    public String date;
     serverGUI(){
         frame = new JFrame();
         frame.setTitle("Server");
@@ -60,6 +64,11 @@ public class serverGUI {
 
         frame.setVisible(true);
 
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");  
+        LocalDateTime now = LocalDateTime.now();  
+        
+        date = dtf.format(now);
+        
     }
 
     public void cartGUI(){
@@ -96,7 +105,7 @@ public class serverGUI {
             System.out.println(key + " " + cost + " " + ingredientMap.get(key));
 
             button = new item(key ,cost, ingredientMap.get(key));
-        
+ 
             button.addActionListener(e ->
             {   
                 cartPrices.add(cost); 
@@ -106,7 +115,8 @@ public class serverGUI {
                
                 display += " " + key + "\n";
                 itemsOrderedText.setText(display);
-
+                
+                ingredientList.addAll(Arrays.asList(ingredientMap.get(key).split(",")));
                 
             });
 
@@ -128,7 +138,7 @@ public class serverGUI {
         ingredientMap.put("Chick-fil-A E", "BUNS,CHICKEN_B,SAUCE");
 
         costMap.put("Chick-fil-A M", 7.55);
-        ingredientMap.put("Chick-fil-A M", "BUNS,CHICKEN_B,SAUCE,LETTUCE,POTATO");
+        ingredientMap.put("Chick-fil-A M", "BUNS,CHICKEN_B,SAUCE,LETTUCE,POTATOES");
 
         costMap.put("Chick-fil-A Deluxe E", 4.89);
         costMap.put("Chick-fil-A Deluxe M", 8.25);
@@ -151,10 +161,12 @@ public class serverGUI {
         purchase.addActionListener(e ->
         {   
             //need to call sql command here to insert into sales history
-            jd.runSQLCommand();
+            jd.addOrder();
             //reset
             cartNames.clear();
             cartPrices.clear();
+            ingredientList.clear();
+            
             totalCost.setText("0.00" + "$");
             display = "";
             itemsOrderedText.setText(display);

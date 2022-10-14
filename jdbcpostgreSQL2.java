@@ -45,7 +45,7 @@ public class jdbcpostgreSQL2 {
    
   }// end main
 
-  public void runSQLCommand(){
+  public void addOrder(){
      // Building the connection with your credentials
      Connection conn = null;
      String teamNumber = "71"; // Your team number
@@ -69,44 +69,19 @@ public class jdbcpostgreSQL2 {
        // create a statement object
        Statement stmt = conn.createStatement();
        String sqlStatement = "";
- 
-       // Change File based on csv to send to table
-       //String file = "ingredient.csv";
-       //String line;
-
-       /*
-       BufferedReader br = new BufferedReader(new FileReader(file));
-       while ((line = br.readLine()) != null) {
-         String[] vals = line.split(",");
-         System.out.println(vals[0] + vals[1]);
-         /* Needed for sales history table. Converts string id to int from scanner */
-         /*
-          * String idRaw = vals[0];
-          * String idMod = "";
-          * for (int i =0; i < idRaw.length(); i++){
-          * if(Character.isDigit(idRaw.charAt(i))){
-          * idMod += idRaw.charAt(i);
-          * }
-          * }
-          * 
-          * System.out.println(idMod);
-          * int id = Integer.parseInt(idMod);
-          
- 
-         // sqlStatement = "INSERT INTO saleshistory (" + "sales_id," + "sales_cost," +
-         // "sales_date," + "sales_server)" + " VALUES(" + id + "," + vals[1] + "," + "'"
-         // + vals[2] + "'" + "," + "'" + vals[3] +"'" + ")";
-         // sqlStatement = "INSERT INTO inventory (" + "inventory_name," + "inventory_count)" + " VALUES(" + "'" + vals[0] + "'" + "," + vals[1] + ")";
-         // System.out.println(sqlStatement);
-         stmt.addBatch(sqlStatement);
- 
-       }
-       */
+       
        for(int i = 0; i < sg.cartNames.size(); i++){
         System.out.println(sg.cartNames.get(i));
-       }
-       
-       stmt.executeBatch();
+        sqlStatement = "INSERT INTO saleshistory3 (" + "item," + "cost," + "date" + ")" + " VALUES(" + "'"+sg.cartNames.get(i)+ "'" + "," + sg.cartPrices.get(i) + "," + "'" + sg.date + "'"+ ")";
+        stmt.addBatch(sqlStatement);
+
+
+      }
+      for(int i = 0; i < sg.ingredientList.size(); i++){
+        sqlStatement = "UPDATE inventory SET inventory_count = inventory_count - 1 WHERE inventory_name = " + "'" + sg.ingredientList.get(i) + "'";
+        stmt.addBatch(sqlStatement);
+      }
+      stmt.executeBatch();
  
        // Running a query
        // TODO: update the sql command here
@@ -147,4 +122,6 @@ public class jdbcpostgreSQL2 {
        System.out.println("Connection NOT Closed.");
      } // end try catch
   }
+
+
 }// end Class
