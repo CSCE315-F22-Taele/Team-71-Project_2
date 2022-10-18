@@ -11,7 +11,6 @@ public class item extends JButton{
     public double cost;
     private String ingredient;
 
-
     public item(String name, double cost, String ingredient){
         this.name = name;   
         this.cost = cost;

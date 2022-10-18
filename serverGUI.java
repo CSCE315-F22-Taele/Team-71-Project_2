@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
 public class serverGUI {
-    private JFrame frame;
+    public JFrame frame;
     
     private JPanel cartPanel;
     public JLabel totalCost;
@@ -71,7 +71,7 @@ public class serverGUI {
 
         frame.setVisible(true);
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");  
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");  
         LocalDateTime now = LocalDateTime.now();  
         
         date = dtf.format(now);
@@ -84,7 +84,6 @@ public class serverGUI {
         categories.setHorizontalAlignment(JLabel.CENTER);
         categories.setFont(new Font("Serif", Font.BOLD, 20));
         cartPanel.add(categories);
-
 
         purchase = new JButton("PURCHASE");
         purchase.setPreferredSize(new Dimension(50,50));
@@ -221,7 +220,6 @@ public class serverGUI {
         costMap.put("Grilled Chicken Club M", 10.65);
         ingredientMap.put("Grilled Chicken Club M", "BUNS,CHICKEN_B,SAUCE,PICKLES,TOMATOES,LETTUCE,BACON,POTATOES");
     
-        
         costMap.put("Grilled Chicken Cool Wrap E", 7.25);
         ingredientMap.put("Grilled Chicken Cool Wrap E", "CHICKEN_B,SAUCE,TORTILLA");
         costMap.put("Grilled Chicken Cool Wrap M", 10.59);
@@ -238,9 +236,9 @@ public class serverGUI {
         costMap.put("Chick-fil-A Small Waffle Potato Fries", 1.89);
         ingredientMap.put("Chick-fil-A Small Waffle Potato Fries", "POTATOES");
         costMap.put("Chick-fil-A Medium Waffle Potato Fries", 2.19);
-        ingredientMap.put("Chick-fil-A Medium Waffle Potato Fries", "POTATOES");
+        ingredientMap.put("Chick-fil-A Medium Waffle Potato Fries", "POTATOES, POTATOES");
         costMap.put("Chick-fil-A Large Waffle Potato Fries", 2.59);
-        ingredientMap.put("Chick-fil-A Large Waffle Potato Fries", "POTATOES");
+        ingredientMap.put("Chick-fil-A Large Waffle Potato Fries", "POTATOES, POTATOES,, POTATOES");
     
         costMap.put("Small Fruit Cup", 2.79);
         ingredientMap.put("Small Fruit Cup", "FRUIT_CUP");
@@ -296,7 +294,7 @@ public class serverGUI {
         managerButton.addActionListener(e ->
         {   
             mg = new managerGUI();
-            //frame.setVisible(false);
+            frame.setVisible(false);
 
         });
     }

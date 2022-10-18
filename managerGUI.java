@@ -39,11 +39,14 @@ public class managerGUI {
 
     public managerGUI(){
         frame = new JFrame();
-        frame.setTitle("Server");
+        frame.setTitle("Manager");
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setSize(new Dimension(800 ,800));
+        frame.setSize(new Dimension(1000 ,800));
+        
+        salesAndServerButton();
+
 
         inventoryUpdater = new JPanel(new GridLayout(10,1,0,5));
         inventoryUpdater.setBounds(0,0,150,750);
@@ -56,6 +59,7 @@ public class managerGUI {
         inventoryViewerGUI();        
         frame.getContentPane().add(scrollPane);
         frame.setVisible(true);
+
     }
     public void inventoryViewerGUI(){
         inventoryStats = new JTextArea();
@@ -128,9 +132,20 @@ public class managerGUI {
         });
     }
 
+    public void salesAndServerButton(){
+        JButton server = new JButton("Server");
+        server.setBounds(850, 20, 100, 30);
+        frame.add(server);
+
+        server.addActionListener( e -> {
+            jd.sg.frame.setVisible(true);
+            frame.setVisible(false);
+        });
+    }
+
     public void addNewItemPressed(){
         addNewItem.addActionListener(e ->
-        {   System.out.println("test2");
+        {   //System.out.println("test2");
           
             
             for(int i = 0; i < jd.sg.buttonList.size(); i++){
@@ -151,8 +166,8 @@ public class managerGUI {
                 if(key.equals(newItemNameArea.getText())){
                     notIn = true;
                 }
-                
             }
+            
             if(notIn == false){
                 jd.sg.costMap.put(newItemNameArea.getText(), Double.parseDouble(newItemCostArea.getText()));
                 jd.sg.ingredientMap.put(newItemNameArea.getText(), newItemIngredientArea.getText());
