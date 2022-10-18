@@ -63,7 +63,7 @@ public class managerGUI {
     }
     public void inventoryViewerGUI(){
         inventoryStats = new JTextArea();
-
+        inventoryStats.setEditable(false);
         inventoryView.add(inventoryStats);
         inventoryViewContainer.add(inventoryView);
         scrollPane = new JScrollPane(inventoryViewContainer);
@@ -133,6 +133,8 @@ public class managerGUI {
     }
 
     public void salesAndServerButton(){
+        salesReportGUI sr = new salesReportGUI();
+
         JButton server = new JButton("Server");
         server.setBounds(850, 20, 100, 30);
         frame.add(server);
@@ -140,6 +142,18 @@ public class managerGUI {
         server.addActionListener( e -> {
             jd.sg.frame.setVisible(true);
             frame.setVisible(false);
+            sr.frame.setVisible(false);
+
+        });
+
+        JButton salesData = new JButton("<html>" + "sales" + "<br/>" + "data" + "</html>");
+        salesData.setBounds(750, 20, 100, 30);
+        frame.add(salesData);
+
+        salesData.addActionListener( e -> {
+            //jd.sg.frame.setVisible(true);
+            //frame.setVisible(false);
+            sr.frame.setVisible(true);
         });
     }
 
@@ -150,7 +164,6 @@ public class managerGUI {
             
             for(int i = 0; i < jd.sg.buttonList.size(); i++){
                 if(jd.sg.buttonList.get(i).getKey().compareTo(newItemNameArea.getText()) == 0){
-                    System.out.println("CHANGED2");
                     double cost = Double.parseDouble(newItemCostArea.getText());
                     jd.sg.costMap.put(newItemNameArea.getText(), cost);
                     jd.sg.buttonList.get(i).setCost(cost);
