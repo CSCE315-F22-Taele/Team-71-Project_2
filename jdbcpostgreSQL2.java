@@ -244,7 +244,7 @@ public class jdbcpostgreSQL2 {
       Statement stmt = conn.createStatement();
       String sqlStatement = "";
       
-      sqlStatement = "SELECT * from saleshistory3 where TO_DATE(DATE, 'MM/DD/YYYY HH:MI') = '" + date + "'" ;
+      sqlStatement = "SELECT * from saleshistory3 where TO_DATE(DATE, 'MM/DD/YYYY HH24:MI') = '" + date + "'" ;
 
       ResultSet rs =stmt.executeQuery(sqlStatement);
       ResultSetMetaData rm = rs.getMetaData();
