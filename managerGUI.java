@@ -58,7 +58,14 @@ public class managerGUI {
         frame.getContentPane().add(scrollPane);
         frame.setVisible(true);
 
-    }
+    
+    /**
+     * The inventoryViewerGUI function creates a GUI that displays the  inventory.
+     * 
+     *
+     *@param
+     * @return A jscrollpane object
+     */}
     public void inventoryViewerGUI(){
         inventoryStats = new JTextArea();
         inventoryStats.setEditable(false);
