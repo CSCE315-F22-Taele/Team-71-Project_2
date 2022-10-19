@@ -285,6 +285,138 @@ public class jdbcpostgreSQL2 {
     } 
     return holder;
   }
+  public String viewRestock(){
+    String holder = "";
+    // Building the connection with your credentials
+    Connection conn = null;
+    String teamNumber = "71"; // Your team number
+    String sectionNumber = "906"; // Your section number
+    String dbName = "csce331_" + sectionNumber + "_" + teamNumber;
+    String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
+    dbSetup2 myCredentials = new dbSetup2();
 
-  
+    // Connecting to the database
+    try {
+      conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+
+    System.out.println("Opened database successfully");
+
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+      String sqlStatement = "";
+      
+      sqlStatement = "SELECT * from inventory where inventory_count < 10;";
+      ResultSet rs =stmt.executeQuery(sqlStatement);
+      ResultSetMetaData rm = rs.getMetaData();
+      int size = rm.getColumnCount();
+
+      for(int i=1; i <=size; i++){
+        holder += rm.getColumnName(i) + " ";
+        //System.out.println(rm.getColumnName(i));
+      }
+      holder += "\n";
+      System.out.println();
+      while(rs.next()){
+        for(int i = 1;i<=size; i++){
+          //System.out.println(rs.getString(i));
+          holder += rs.getString(i) + "\n";
+        }
+      
+        //System.out.println();
+      }
+      
+    //sqlStatement = "UPDATE inventory SET inventory_count = WHERE inventory_name = " + "'" + sg.ingredientList.get(i) + "'";
+     // stmt.addBatch(sqlStatement);
+     //stmt.executeBatch();
+     
+      System.out.println("--------------------Query Results--------------------");
+     } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+     }
+
+
+    try {
+      conn.close();
+      System.out.println("Connection Closed.");
+    } catch (Exception e) {
+      System.out.println("Connection NOT Closed.");
+    } 
+    return holder;
+  }
+  public String viewTenPercentIgredients(){
+    String holder = "";
+    // Building the connection with your credentials
+    Connection conn = null;
+    String teamNumber = "71"; // Your team number
+    String sectionNumber = "906"; // Your section number
+    String dbName = "csce331_" + sectionNumber + "_" + teamNumber;
+    String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
+    dbSetup2 myCredentials = new dbSetup2();
+
+    // Connecting to the database
+    try {
+      conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+
+    System.out.println("Opened database successfully");
+
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+      String sqlStatement = "";
+      
+      sqlStatement = "SELECT inventory_name from inventory where inventory_count < 90";
+      stmt.addBatch(sqlStatement);
+      ResultSet rs =stmt.executeQuery(sqlStatement);
+      ResultSetMetaData rm = rs.getMetaData();
+      int size = rm.getColumnCount();
+
+      for(int i=1; i <=size; i++){
+        //holder += rm.getColumnName(i) + " ";
+        //System.out.println(rm.getColumnName(i));
+      }
+      holder += "\n";
+      System.out.println();
+      while(rs.next()){
+        for(int i = 1;i<=size; i++){
+          //System.out.println(rs.getString(i));
+          holder += rs.getString(i) +"," + "\n";
+        }
+      
+        //System.out.println();
+      }
+      
+    //sqlStatement = "UPDATE inventory SET inventory_count = WHERE inventory_name = " + "'" + sg.ingredientList.get(i) + "'";
+     // stmt.addBatch(sqlStatement);
+     //stmt.executeBatch();
+     
+      System.out.println("--------------------Query Results--------------------");
+     } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+     }
+
+
+    try {
+      conn.close();
+      System.out.println("Connection Closed.");
+    } catch (Exception e) {
+      System.out.println("Connection NOT Closed.");
+    } 
+    return holder;
+  }
+ 
 }

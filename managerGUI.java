@@ -1,4 +1,3 @@
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -7,11 +6,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import java.awt.*;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class managerGUI {

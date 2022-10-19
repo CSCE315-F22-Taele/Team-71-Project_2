@@ -1,4 +1,4 @@
-import javax.swing.BorderFactory;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -7,15 +7,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import java.awt.*;
-import java.text.DecimalFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
 
 public class salesReportGUI {
     public JFrame frame;
@@ -29,9 +26,11 @@ public class salesReportGUI {
     private String endDate;
 
     private JTextArea startDateArea;
-
-    
     private JTextArea endDateArea;
+
+    private String excessDate;
+    private JTextArea excessDateArea;
+
 
     jdbcpostgreSQL2 jd = new jdbcpostgreSQL2();
     String allSales;
@@ -44,6 +43,8 @@ public class salesReportGUI {
         frame.setSize(new Dimension(800 ,800));
 
         dataPickerGUI();
+        excessReportGUI();
+        restockReportGUI();
 
         dataView = new JPanel(new GridLayout(1,1));
         dataViewContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -94,10 +95,10 @@ public class salesReportGUI {
         showSales.addActionListener( e -> {
             startDate = startDateArea.getText();
             endDate = endDateArea.getText();
-            salesStats.setText(betweenDates());
+            salesStats.setText(displaySalesBetweenDates());
         });
     }
-    public String betweenDates(){
+    public String displaySalesBetweenDates(){
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
         String holder = "";
@@ -121,11 +122,41 @@ public class salesReportGUI {
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             //e.printStackTrace();
-            
+
         }
 
         System.out.println(holder);
         return holder;
     }
 
+    public void excessReportGUI(){
+
+        JLabel excessLabel = new JLabel("Enter excess MM/dd/yyyy");
+        excessLabel.setBounds(20, 100, 200, 30);
+        frame.add(excessLabel);
+
+        excessDateArea = new JTextArea();
+        excessDateArea.setBounds(30, 150, 100, 30);
+        frame.add(excessDateArea);
+
+        JButton excessButton = new JButton("<html>" + "Show Excess" + "<br/>" + "Report" + "</html>");
+        excessButton.setBounds(20, 200, 150, 50);
+        frame.add(excessButton);
+        
+        excessButton.addActionListener( e -> {
+            System.out.println(jd.viewTenPercentIgredients());
+        });
+        
+    }
+
+    public void restockReportGUI(){
+        JButton excessButton = new JButton("<html>" + "Show Restock" + "<br/>" + "Report" + "</html>");
+        excessButton.setBounds(20, 350, 150, 50);
+        frame.add(excessButton);
+        
+        excessButton.addActionListener( e -> {
+            salesStats.setText(jd.viewRestock());
+        });
+
+    }
 }
