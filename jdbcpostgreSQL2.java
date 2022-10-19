@@ -39,10 +39,39 @@ public class jdbcpostgreSQL2 {
    */
   static serverGUI sg;
 
+  Connection conn = null;
+  String teamNumber = "71"; // Your team number
+  String sectionNumber = "906"; // Your section number
+  String dbName = "csce331_" + sectionNumber + "_" + teamNumber;
+  String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
+
   public static void main(String args[]) {
     sg = new serverGUI();
 
   }// end main
+    /**
+   *
+   * Connects to database using credentials at the top of the file.
+   * 
+   * 
+   * @param
+   * 
+   * @return Function returns nothing. It is void.
+   * 
+   * @throws
+   */
+
+  public void connectToDatabase(){
+    try {
+      conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+
+    System.out.println("Opened database successfully");
+  }
 
   /**
    *
@@ -56,23 +85,9 @@ public class jdbcpostgreSQL2 {
    * 
    * @throws
    */
-  public void addOrder() {
-    // Building the connection with your credentials
-    Connection conn = null;
-    String teamNumber = "71"; // Your team number
-    String sectionNumber = "906"; // Your section number
-    String dbName = "csce331_" + sectionNumber + "_" + teamNumber;
-    String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
+  public void addOrder() {    
     // Connecting to the database
-    try {
-      conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.err.println(e.getClass().getName() + ": " + e.getMessage());
-      System.exit(0);
-    }
-
-    System.out.println("Opened database successfully");
+    connectToDatabase();
 
     try {
       // create a statement object
@@ -121,22 +136,7 @@ public class jdbcpostgreSQL2 {
    * @throws
    */
   public String viewInventory() {
-    String holder = "";
-    // Building the connection with your credentials
-    Connection conn = null;
-    String teamNumber = "71"; // Your team number
-    String sectionNumber = "906"; // Your section number
-    String dbName = "csce331_" + sectionNumber + "_" + teamNumber;
-    String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
-    // Connecting to the database
-    try {
-      conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.err.println(e.getClass().getName() + ": " + e.getMessage());
-      System.exit(0);
-    }
-
+    connectToDatabase();
     System.out.println("Opened database successfully");
 
     try {
@@ -200,21 +200,7 @@ public class jdbcpostgreSQL2 {
   public String changeInventory() {
     String holder = "";
     // Building the connection with your credentials
-    Connection conn = null;
-    String teamNumber = "71"; // Your team number
-    String sectionNumber = "906"; // Your section number
-    String dbName = "csce331_" + sectionNumber + "_" + teamNumber;
-    String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
-    // Connecting to the database
-    try {
-      conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.err.println(e.getClass().getName() + ": " + e.getMessage());
-      System.exit(0);
-    }
-
-    System.out.println("Opened database successfully");
+    connectToDatabase();
 
     try {
       // create a statement object
@@ -256,23 +242,7 @@ public class jdbcpostgreSQL2 {
    */
   public String viewSales(String date) {
     String holder = "";
-    // Building the connection with your credentials
-    Connection conn = null;
-    String teamNumber = "71"; // Your team number
-    String sectionNumber = "906"; // Your section number
-    String dbName = "csce331_" + sectionNumber + "_" + teamNumber;
-    String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
-    // Connecting to the database
-    try {
-      conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.err.println(e.getClass().getName() + ": " + e.getMessage());
-      System.exit(0);
-    }
-
-    System.out.println("Opened database successfully");
-
+    connectToDatabase();
     try {
       // create a statement object
       Statement stmt = conn.createStatement();
@@ -334,23 +304,7 @@ public class jdbcpostgreSQL2 {
    */
   public String viewRestock() {
     String holder = "";
-    // Building the connection with your credentials
-    Connection conn = null;
-    String teamNumber = "71"; // Your team number
-    String sectionNumber = "906"; // Your section number
-    String dbName = "csce331_" + sectionNumber + "_" + teamNumber;
-    String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
-    // Connecting to the database
-    try {
-      conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.err.println(e.getClass().getName() + ": " + e.getMessage());
-      System.exit(0);
-    }
-
-    System.out.println("Opened database successfully");
-
+    connectToDatabase();
     try {
       // create a statement object
       Statement stmt = conn.createStatement();
@@ -414,21 +368,7 @@ public class jdbcpostgreSQL2 {
   public String viewTenPercentIngredients() {
     String holder = "";
     // Building the connection with your credentials
-    Connection conn = null;
-    String teamNumber = "71"; // Your team number
-    String sectionNumber = "906"; // Your section number
-    String dbName = "csce331_" + sectionNumber + "_" + teamNumber;
-    String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
-    // Connecting to the database
-    try {
-      conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.err.println(e.getClass().getName() + ": " + e.getMessage());
-      System.exit(0);
-    }
-
-    System.out.println("Opened database successfully");
+    connectToDatabase();
 
     try {
       // create a statement object
@@ -452,14 +392,7 @@ public class jdbcpostgreSQL2 {
           // System.out.println(rs.getString(i));
           holder += rs.getString(i) + "," + "\n";
         }
-
-        // System.out.println();
       }
-
-      // sqlStatement = "UPDATE inventory SET inventory_count = WHERE inventory_name =
-      // " + "'" + sg.ingredientList.get(i) + "'";
-      // stmt.addBatch(sqlStatement);
-      // stmt.executeBatch();
 
       System.out.println("--------------------Query Results--------------------");
     } catch (Exception e) {

@@ -153,8 +153,7 @@ public class salesReportGUI {
             }
 
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            // e.printStackTrace();
+            e.printStackTrace();
 
         }
 
