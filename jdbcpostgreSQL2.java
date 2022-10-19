@@ -49,7 +49,8 @@ public class jdbcpostgreSQL2 {
     sg = new serverGUI();
 
   }// end main
-    /**
+
+  /**
    *
    * Connects to database using credentials at the top of the file.
    * 
@@ -61,7 +62,7 @@ public class jdbcpostgreSQL2 {
    * @throws
    */
 
-  public void connectToDatabase(){
+  public void connectToDatabase() {
     try {
       conn = DriverManager.getConnection(dbConnectionString, dbSetup2.user, dbSetup2.pswd);
     } catch (Exception e) {
@@ -85,7 +86,7 @@ public class jdbcpostgreSQL2 {
    * 
    * @throws
    */
-  public void addOrder() {    
+  public void addOrder() {
     // Connecting to the database
     connectToDatabase();
 
@@ -136,6 +137,7 @@ public class jdbcpostgreSQL2 {
    * @throws
    */
   public String viewInventory() {
+    String holder = "";
     connectToDatabase();
     System.out.println("Opened database successfully");
 
