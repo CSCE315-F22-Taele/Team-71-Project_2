@@ -1,10 +1,3 @@
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +5,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import java.awt.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
+import java.util.Map;
 
 
 public class salesReportGUI {
@@ -28,6 +29,7 @@ public class salesReportGUI {
     private JTextArea startDateArea;
     private JTextArea endDateArea;
 
+    private String excessDate;
     private JTextArea excessDateArea;
 
 
@@ -141,9 +143,35 @@ public class salesReportGUI {
         JButton excessButton = new JButton("<html>" + "Show Excess" + "<br/>" + "Report" + "</html>");
         excessButton.setBounds(20, 200, 150, 50);
         frame.add(excessButton);
-        
         excessButton.addActionListener( e -> {
-            System.out.println(jd.viewTenPercentIgredients());
+            String keyHolder = "";
+
+            System.out.println(jd.viewTenPercentIngredients());
+            String []ingredients = jd.viewTenPercentIngredients().split(",");
+            System.out.println(ingredients[0]);
+            for (Map.Entry<String, String> iMap : jd.sg.ingredientMap.entrySet()) {
+                String key = iMap.getKey();
+                String ing = iMap.getValue();
+
+                for(int i =0; i < ingredients.length; i++){
+                    String compare = "";
+                    //System.out.println(ing + " " + ingredients[i].trim());
+                    for(int j = 0; j < ingredients[i].length();j++){
+                        if(Character.isLetter(ingredients[i].charAt(j))){
+                            compare += ingredients[i].charAt(j);
+                        }
+                    }
+                    System.out.println("ORIGNAL" + compare);
+                    if(ing.indexOf(compare) != -1 && ing.indexOf(compare) != 0){
+                        System.out.println(ing + ing.indexOf(compare)+ "MATCH" + compare);
+
+                        keyHolder += key + "\n";
+                    }
+                }
+
+            }
+            System.out.println("keys:" + keyHolder);
+            salesStats.setText(keyHolder);
         });
         
     }
