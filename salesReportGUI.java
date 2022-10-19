@@ -29,7 +29,6 @@ public class salesReportGUI {
     private JTextArea startDateArea;
     private JTextArea endDateArea;
 
-    private String excessDate;
     private JTextArea excessDateArea;
 
 
@@ -149,7 +148,7 @@ public class salesReportGUI {
             System.out.println(jd.viewTenPercentIngredients());
             String []ingredients = jd.viewTenPercentIngredients().split(",");
             System.out.println(ingredients[0]);
-            for (Map.Entry<String, String> iMap : jd.sg.ingredientMap.entrySet()) {
+            for (Map.Entry<String, String> iMap : jdbcpostgreSQL2.sg.ingredientMap.entrySet()) {
                 String key = iMap.getKey();
                 String ing = iMap.getValue();
 
