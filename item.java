@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import javax.swing.JButton;
 
 
@@ -11,6 +7,12 @@ public class item extends JButton{
     public double cost;
     private String ingredient;
 
+    public String getIngredient() {
+        return ingredient;
+    }
+    public void setIngredient(String ingredient) {
+        this.ingredient = ingredient;
+    }
     public item(String name, double cost, String ingredient){
         this.name = name;   
         this.cost = cost;

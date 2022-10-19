@@ -1,18 +1,16 @@
-import javax.swing.BorderFactory;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.util.Map;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
-import java.awt.*;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class managerGUI {
     private JFrame frame;
@@ -140,7 +138,7 @@ public class managerGUI {
         frame.add(server);
 
         server.addActionListener( e -> {
-            jd.sg.frame.setVisible(true);
+            jdbcpostgreSQL2.sg.frame.setVisible(true);
             frame.setVisible(false);
             sr.frame.setVisible(false);
 
@@ -151,7 +149,7 @@ public class managerGUI {
         frame.add(salesData);
 
         salesData.addActionListener( e -> {
-            //jd.sg.frame.setVisible(true);
+            //jdbcpostgreSQL2.sg.frame.setVisible(true);
             //frame.setVisible(false);
             sr.frame.setVisible(true);
         });
@@ -162,41 +160,40 @@ public class managerGUI {
         {   //System.out.println("test2");
           
             
-            for(int i = 0; i < jd.sg.buttonList.size(); i++){
-                if(jd.sg.buttonList.get(i).getKey().compareTo(newItemNameArea.getText()) == 0){
+            for(int i = 0; i < jdbcpostgreSQL2.sg.buttonList.size(); i++){
+                if(jdbcpostgreSQL2.sg.buttonList.get(i).getKey().compareTo(newItemNameArea.getText()) == 0){
                     double cost = Double.parseDouble(newItemCostArea.getText());
-                    jd.sg.costMap.put(newItemNameArea.getText(), cost);
-                    jd.sg.buttonList.get(i).setCost(cost);
-                    jd.sg.buttonList.get(i).changeName(newItemNameArea.getText(), cost);
+                    jdbcpostgreSQL2.sg.costMap.put(newItemNameArea.getText(), cost);
+                    jdbcpostgreSQL2.sg.buttonList.get(i).setCost(cost);
+                    jdbcpostgreSQL2.sg.buttonList.get(i).changeName(newItemNameArea.getText(), cost);
                    
                 }
             }
             
             Boolean notIn = false;
-            for (Map.Entry<String, Double> costMap : jd.sg.costMap.entrySet()) {
+            for (Map.Entry<String, Double> costMap : jdbcpostgreSQL2.sg.costMap.entrySet()) {
                 String key = costMap.getKey();
-                Double cost = costMap.getValue();
                 if(key.equals(newItemNameArea.getText())){
                     notIn = true;
                 }
             }
             
             if(notIn == false){
-                jd.sg.costMap.put(newItemNameArea.getText(), Double.parseDouble(newItemCostArea.getText()));
-                jd.sg.ingredientMap.put(newItemNameArea.getText(), newItemIngredientArea.getText());
+                jdbcpostgreSQL2.sg.costMap.put(newItemNameArea.getText(), Double.parseDouble(newItemCostArea.getText()));
+                jdbcpostgreSQL2.sg.ingredientMap.put(newItemNameArea.getText(), newItemIngredientArea.getText());
                 
                 item button = new item(newItemNameArea.getText() ,Double.parseDouble(newItemCostArea.getText()), newItemIngredientArea.getText());
                 button.addActionListener(x -> {
                     System.out.println("nice");
-                    jd.sg.cartNames.add(button.getKey());
-                    jd.sg.display += " " + button.getKey() + "\n";
-                    jd.sg.itemsOrderedText.setText( jd.sg.display);
-                    jd.sg.cartPrices.add(button.cost);
-                    jd.sg.totalCost.setText(jd.sg.totalCartCost() + "$");
+                    jdbcpostgreSQL2.sg.cartNames.add(button.getKey());
+                    jdbcpostgreSQL2.sg.display += " " + button.getKey() + "\n";
+                    jdbcpostgreSQL2.sg.itemsOrderedText.setText( jdbcpostgreSQL2.sg.display);
+                    jdbcpostgreSQL2.sg.cartPrices.add(button.cost);
+                    jdbcpostgreSQL2.sg.totalCost.setText(jdbcpostgreSQL2.sg.totalCartCost() + "$");
 
                 });
-                jd.sg.buttonList.add(button);
-                jd.sg.itemPanel.add(button);
+                jdbcpostgreSQL2.sg.buttonList.add(button);
+                jdbcpostgreSQL2.sg.itemPanel.add(button);
                 
 
             }
